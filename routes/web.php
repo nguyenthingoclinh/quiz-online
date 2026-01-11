@@ -58,6 +58,10 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/exams/create', function () {
         return view('teacher.exams.create');
     })->name('exams.create');
+
+    Route::get('/exams/manage', function () {
+        return view('teacher.exams.manage');
+    })->name('exams.manage');
     
     Route::post('/exams', function () {
         return redirect()->route('teacher.exams.index');
@@ -65,8 +69,8 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     
     // Questions
     Route::get('/questions', function () {
-        return 'Ngân hàng câu hỏi giáo viên';
-    })->name('questions');
+        return view('teacher.questions.qna');
+    })->name('questions.qna');
     
     // Students
     Route::get('/students', function () {
@@ -75,8 +79,8 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     
     // Results
     Route::get('/results', function () {
-        return 'Kết quả thi';
-    })->name('results');
+        return view('teacher.results.index');
+    })->name('results.index');
     
     // Reports
     Route::get('/reports', function () {
@@ -108,11 +112,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     // Users Management
     Route::get('/users/students', function () {
-        return 'Quản lý học sinh';
+        return view('admin.users.students');
     })->name('users.students');
     
     Route::get('/users/teachers', function () {
-        return view('admin.users.taechers');
+        return view('admin.users.teachers');
     })->name('users.teachers');
     
     Route::get('/users/admins', function () {

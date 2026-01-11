@@ -40,7 +40,7 @@
                     Quản lý đề thi
                 </a>
 
-                <a href="{{ route('teacher.questions') }}" class="teacher-link">
+                <a href="{{ route('teacher.questions.qna') }}" class="teacher-link">
                     Ngân hàng câu hỏi
                 </a>
 
@@ -48,7 +48,7 @@
                     Học sinh của tôi
                 </a>
 
-                <a href="{{ route('teacher.results') }}" class="teacher-link">
+                <a href="{{ route('teacher.results.index') }}" class="teacher-link">
                     Kết quả thi
                 </a>
 
