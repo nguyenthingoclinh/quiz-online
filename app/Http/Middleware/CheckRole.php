@@ -16,10 +16,6 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        if (! $request->user()) {
-            return redirect()->route('login');
-        }
-
         $allowedRoles = collect($roles)->map(function ($role) {
             return match ($role) {
                 'admin' => UserRole::ADMIN,
