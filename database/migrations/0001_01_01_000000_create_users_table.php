@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('full_name')->nullable();
             $table->string('email')->nullable()->unique();
             $table->enum('role', ['admin', 'giang_vien', 'sinh_vien']);
+            $table->rememberToken();
             $table->timestamps();
         });
 

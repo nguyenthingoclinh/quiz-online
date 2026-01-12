@@ -8,7 +8,7 @@
 <!-- ================= HEADER ACTIONS ================= -->
 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-        <div class="relative flex-1 min-w-[280px]">
+        {{-- <div class="relative flex-1 min-w-[300px]">
             <input
                 type="text"
                 placeholder="Tìm kiếm giáo viên theo tên, email, mã GV..."
@@ -19,9 +19,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
-        </div>
+        </div> --}}
 
-        <select class="px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500">
+        {{-- <select class="px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500">
             <option value="">Tất cả môn học</option>
             <option>Toán học</option>
             <option>Vật lý</option>
@@ -36,7 +36,7 @@
             <option>Đang dạy</option>
             <option>Nghỉ phép</option>
             <option>Tạm ngưng</option>
-        </select>
+        </select> --}}
     </div>
 
     <button class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold
@@ -57,10 +57,10 @@
         <div class="flex justify-between items-center">
             <div>
                 <p class="text-sm text-gray-600">Tổng giáo viên</p>
-                <p class="text-3xl font-bold text-gray-900 mt-2">187</p>
-                <p class="text-sm text-green-600 mt-2">
+                <p class="text-3xl font-bold text-gray-900 mt-2">{{ $totalLecturers }}</p>
+                {{-- <p class="text-sm text-green-600 mt-2">
                     <span class="font-semibold">+5</span> so với tháng trước
-                </p>
+                </p> --}}
             </div>
             <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center">
                 <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Đang giảng dạy -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition">
+    {{-- <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition">
         <div class="flex justify-between items-center">
             <div>
                 <p class="text-sm text-gray-600">Đang giảng dạy</p>
@@ -87,10 +87,10 @@
                 </svg>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Tổng lớp học -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition">
+    {{-- <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition">
         <div class="flex justify-between items-center">
             <div>
                 <p class="text-sm text-gray-600">Tổng lớp học</p>
@@ -106,7 +106,7 @@
                 </svg>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Đề thi -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition">
@@ -156,60 +156,56 @@
             </thead>
 
             <tbody class="divide-y">
+                @foreach($teachers as $teacher)
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4">
+                            <input type="checkbox" value="{{ $teacher->id }}">
+                        </td>
 
-            <!-- GV 1 -->
-            <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4"><input type="checkbox"></td>
-                <td class="px-6 py-4 font-semibold">TS. Nguyễn Văn A</td>
-                <td class="px-6 py-4 font-mono">GV001</td>
-                <td class="px-6 py-4">Toán học</td>
-                <td class="px-6 py-4">
-                    <p>nguyenvana.gv@school.edu.vn</p>
-                    <p class="text-sm text-gray-500">0912 345 678</p>
-                </td>
-                <td class="px-6 py-4 font-bold">5</td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">Đang dạy</span>
-                </td>
-                <td class="px-6 py-4 text-right space-x-2">
-                    <button class="text-blue-600">Xem</button>
-                    <button class="text-yellow-600">Sửa</button>
-                    <button class="text-red-600">Xóa</button>
-                </td>
-            </tr>
+                        <td class="px-6 py-4 font-semibold">
+                            {{ $teacher->full_name }}
+                        </td>
 
-            <!-- GV 2 -->
-            <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4"><input type="checkbox"></td>
-                <td class="px-6 py-4 font-semibold">CN. Phạm Văn H</td>
-                <td class="px-6 py-4 font-mono">GV004</td>
-                <td class="px-6 py-4">Hóa học</td>
-                <td class="px-6 py-4">
-                    <p>phamvanh.gv@school.edu.vn</p>
-                    <p class="text-sm text-gray-500">0909 888 777</p>
-                </td>
-                <td class="px-6 py-4 font-bold">0</td>
-                <td class="px-6 py-4">
-                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs">Tạm ngưng</span>
-                </td>
-                <td class="px-6 py-4 text-right">
-                    <button class="text-blue-600">Xem</button>
-                </td>
-            </tr>
+                        <td class="px-6 py-4 font-mono">
+                            GV{{ str_pad($teacher->id, 3, '0', STR_PAD_LEFT) }}
+                        </td>
 
+                        <td class="px-6 py-4">
+                            —
+                        </td>
+
+                        <td class="px-6 py-4">
+                            <p>{{ $teacher->email }}</p>
+                        </td>
+
+                        <td class="px-6 py-4 font-bold">
+                            {{ $teacher->exams()->count() }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">
+                                Đang dạy
+                            </span>
+                        </td>
+
+                        <td class="px-6 py-4 text-right space-x-2">
+                            <a href="#" class="text-blue-600">Xem</a>
+                            <a href="#" class="text-yellow-600">Sửa</a>
+                            <a href="#" class="text-red-600">Xóa</a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
     <div class="px-6 py-4 border-t flex justify-between items-center">
-        <span class="text-sm text-gray-600">Hiển thị 1–2 / 187</span>
-        <div class="space-x-1">
-            <button class="px-3 py-1 border rounded">«</button>
-            <button class="px-3 py-1 bg-blue-600 text-white rounded">1</button>
-            <button class="px-3 py-1 border rounded">2</button>
-            <button class="px-3 py-1 border rounded">»</button>
-        </div>
+        <span class="text-sm text-gray-600">
+            Hiển thị {{ $teachers->firstItem() }}–{{ $teachers->lastItem() }} / {{ $teachers->total() }}
+        </span>
+
+        {{ $teachers->links() }}
     </div>
 
 </div>

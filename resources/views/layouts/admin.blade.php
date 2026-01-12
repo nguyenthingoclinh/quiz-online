@@ -56,9 +56,9 @@
                             <a href="{{ route('admin.users.teachers') }}" class="block px-4 py-2 rounded-lg text-sm text-blue-200 hover:bg-blue-800 transition">
                                 Giáo viên
                             </a>
-                            <a href="{{ route('admin.users.admins') }}" class="block px-4 py-2 rounded-lg text-sm text-blue-200 hover:bg-blue-800 transition">
+                            {{-- <a href="{{ route('admin.users.admins') }}" class="block px-4 py-2 rounded-lg text-sm text-blue-200 hover:bg-blue-800 transition">
                                 Quản trị viên
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
 
@@ -155,12 +155,12 @@
             <!-- Header -->
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
                 <h1 class="text-xl font-bold text-gray-900">@yield('page-title', 'Dashboard')</h1>
-                
+
                 <div class="flex items-center space-x-4">
                     <!-- Search -->
                     <div class="relative hidden md:block">
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             placeholder="Tìm kiếm..."
                             class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64"
                         >
@@ -190,7 +190,7 @@
         function toggleSubmenu(id) {
             const submenu = document.getElementById(id + '-submenu');
             const icon = document.getElementById(id + '-icon');
-            
+
             submenu.classList.toggle('hidden');
             icon.classList.toggle('rotate-180');
         }
