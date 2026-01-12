@@ -39,14 +39,15 @@
         </select> --}}
     </div>
 
-    <button class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold
-                   rounded-lg shadow-lg hover:shadow-xl transition flex items-center">
+    <a href="{{ route('api.admin.teachers.create') }}"
+        class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold
+            rounded-lg shadow-lg hover:shadow-xl transition flex items-center">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 4v16m8-8H4"/>
+                d="M12 4v16m8-8H4"/>
         </svg>
         Thêm giáo viên mới
-    </button>
+    </a>
 </div>
 
 <!-- ================= STATS CARDS ================= -->
@@ -58,9 +59,9 @@
             <div>
                 <p class="text-sm text-gray-600">Tổng giáo viên</p>
                 <p class="text-3xl font-bold text-gray-900 mt-2">{{ $totalLecturers }}</p>
-                {{-- <p class="text-sm text-green-600 mt-2">
-                    <span class="font-semibold">+5</span> so với tháng trước
-                </p> --}}
+                <p class="text-sm text-green-600 mt-2">
+                    <span class="font-semibold">+{{ $newLecturersThisMonth }}</span> giáo viên mới trong tháng
+                </p>
             </div>
             <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center">
                 <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,7 +110,7 @@
     </div> --}}
 
     <!-- Đề thi -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition">
+    {{-- <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition">
         <div class="flex justify-between items-center">
             <div>
                 <p class="text-sm text-gray-600">Đề thi đã tạo</p>
@@ -126,7 +127,7 @@
                 </svg>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </div>
 
@@ -144,14 +145,14 @@
         <table class="w-full">
             <thead class="bg-gray-50 border-b">
             <tr>
-                <th class="px-6 py-4"><input type="checkbox"></th>
+                <th class="px-6 py-4 text-left"><input type="checkbox"></th>
                 <th class="px-6 py-4 text-left">Giáo viên</th>
-                <th class="px-6 py-4">Mã GV</th>
-                <th class="px-6 py-4">Môn dạy</th>
-                <th class="px-6 py-4">Liên hệ</th>
-                <th class="px-6 py-4">Số lớp</th>
-                <th class="px-6 py-4">Trạng thái</th>
-                <th class="px-6 py-4 text-right">Thao tác</th>
+                <th class="px-6 py-4 text-left">Mã GV</th>
+                <th class="px-6 py-4 text-left">Môn dạy</th>
+                <th class="px-6 py-4 text-left">Liên hệ</th>
+                <th class="px-6 py-4 text-center">Số lớp</th>
+                <th class="px-6 py-4 text-left">Trạng thái</th>
+                <th class="px-6 py-4 text-center">Thao tác</th>
             </tr>
             </thead>
 
@@ -178,7 +179,7 @@
                             <p>{{ $teacher->email }}</p>
                         </td>
 
-                        <td class="px-6 py-4 font-bold">
+                        <td class="text-center px-6 py-4 font-bold">
                             {{ $teacher->exams()->count() }}
                         </td>
 
@@ -188,10 +189,19 @@
                             </span>
                         </td>
 
-                        <td class="px-6 py-4 text-right space-x-2">
-                            <a href="#" class="text-blue-600">Xem</a>
-                            <a href="#" class="text-yellow-600">Sửa</a>
-                            <a href="#" class="text-red-600">Xóa</a>
+                        <td class="px-6 py-4 text-center space-x-2">
+                            <a href="{{ route('api.admin.teachers.show', $teacher) }}" class="text-blue-600">Xem</a>
+                            <a href="{{ route('api.admin.teachers.edit', $teacher) }}" class="text-yellow-600">Sửa</a>
+
+                            <form action="{{ route('api.admin.teachers.destroy', $teacher) }}"
+                                method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="text-red-600"
+                                        onclick="return confirm('Xóa giáo viên này?')">
+                                    Xóa
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

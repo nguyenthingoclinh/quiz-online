@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
 
+    // ADMIN
     Route::middleware(['auth', 'role:admin'])->group(function () {
         // Admin Routes view
         Route::prefix('admin')->name('admin.')->group(function () {
@@ -85,9 +86,13 @@ Route::middleware('auth')->group(function () {
 
         // Admin Routes API
         Route::prefix('api/admin')->name('api.admin.')->group(function () {
-            Route::get('/users', [UserController::class, 'getUsersByRole']);
-            Route::post('/users', [UserController::class, 'createUser']);
-            Route::get('/users/sum', [UserController::class, 'sumUsersByRole']);
+            Route::get('/teachers/create', [AdminController::class, 'create'])->name('teachers.create');
+            Route::post('/teachers', [AdminController::class, 'store'])->name('teachers.store');
+
+            Route::get('/teachers/{teacher}', [AdminController::class, 'show'])->name('teachers.show');
+            Route::get('/teachers/{teacher}/edit', [AdminController::class, 'edit'])->name('teachers.edit');
+            Route::put('/teachers/{teacher}', [AdminController::class, 'update'])->name('teachers.update');
+            Route::delete('/teachers/{teacher}', [AdminController::class, 'destroy'])->name('teachers.destroy');
         });
     });
 
