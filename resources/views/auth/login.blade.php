@@ -17,24 +17,44 @@
         </div>
 
         <div class="login-card">
+            @if(session('error'))
+                <div class="mb-4 p-3 bg-red-100 text-red-700 rounded border border-red-200">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('login') }}" class="login-form">
                 @csrf
 
-                <div>
+                <div class="mb-4">
                     <label class="form-label">Tên đăng nhập</label>
-                    <input type="text" name="email" required
-                           class="login-input"
+                    <input type="text"
+                           name="username"
+                           value="{{ old('username') }}"
+                           required
+                           class="login-input @error('username') border-red-500 @enderror"
                            placeholder="Nhập tên đăng nhập">
+
+                    {{-- Show validation --}}
+                    @error('username')
+                        <p class="mt-1 text-sm text-red-500 italic">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <div>
+                <div class="mb-4">
                     <label class="form-label">Mật khẩu</label>
-                    <input type="password" name="password" required
-                           class="login-input"
+                    <input type="password"
+                           name="password"
+                           required
+                           class="login-input @error('password') border-red-500 @enderror"
                            placeholder="Nhập mật khẩu">
+
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-500 italic">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between mb-6">
                     <label class="flex items-center">
                         <input type="checkbox" name="remember" class="login-remember">
                         <span class="ml-2 text-sm text-gray-600">Ghi nhớ đăng nhập</span>
