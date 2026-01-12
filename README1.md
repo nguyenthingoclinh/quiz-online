@@ -1,64 +1,46 @@
-# Laravel & HeroUI Template
+### Installation (using docker)
+- Step 0: Copy code vào thư mục xampp/htdocs
 
-This is a template for creating applications using Laravel 11 and HeroUI (v2).
-
-## Technologies Used
-
--   [Laravel 12](https://laravel.com/)
--   [HeroUI v2](https://www.heroui.com/)
--   [PHP v8.2](https://www.php.net/)
--   [Tailwind CSS](https://tailwindcss.com/)
--   [Tailwind Variants](https://tailwind-variants.org)
--   [TypeScript](https://www.typescriptlang.org/)
--   [Framer Motion](https://www.framer.com/motion/)
-
-## How to Use
-
-### Use the template with create-Laravel
-
-To create a new project based on this template using `create-laravel`, run the following command:
-
+- Step 1: Run command line to install vendor
 ```bash
-npx create-next-app -e https://github.com/heroui-inc/laravel-template.git
+    composer install
+```
+- Step 2: Create file `.env` for API, refer `.env.example`
+```bash
+     cp .env.example .env
+```
+- Step 3: Run command line to generate key
+```bash
+    php artisan key:generate
+```
+- Step 4: Run command line to jwt secret key
+```bash
+    php artisan jwt:secret
+```
+- Step 5: Run command line to run migrate to create DB
+```bash
+    php artisan migrate --force
+```
+- Step 6: Run command line to add default DB
+```bash
+    php artisan db:seed
+```
+- Step 7: Run command line to add storage link
+```bash
+    php artisan storage:link
+```
+- Step 8: Run command line to install npm dependencies
+```bash
+    npm install
+```
+- Step 9: Run command line to npm
+```bash
+    npm run dev
 ```
 
-After creating the project you will have the base template using Laravel 11.31
-
-### Migrating to Laravel 12
-
-Since this is a starter template, you don't need to follow all the steps in the Laravel 12 [upgrade guide](https://laravel.com/docs/12.x/upgrade). The steps required to upgrade this template are shown below:
-
-#### Update Laravel Framework and Inertia
-
-- In `composer.json` update the `laravel/framework` version to `^12.00`
-- You also need to update the minimum version of `inertiajs/inertia-laravel` to `^2.0.1` in order to work with Laravel 12
-
-#### Run update
-
+- Step 10: Mở một terminal mới rồi chạy lệnh sau
 ```bash
-composer update
+    php artisan serve
 ```
 
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
-
-```bash
-npm install
-```
-
-### Run the development server
-
-```bash
-npm run dev
-```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+##### Hoàn thành, website sẽ chạy trên `http://127.0.0.1:8000`

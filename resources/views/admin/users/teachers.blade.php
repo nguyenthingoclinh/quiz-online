@@ -6,7 +6,7 @@
 @section('content')
 
 <!-- ================= HEADER ACTIONS ================= -->
-<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         {{-- <div class="relative flex-1 min-w-[300px]">
             <input
