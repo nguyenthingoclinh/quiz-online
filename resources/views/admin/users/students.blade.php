@@ -148,9 +148,8 @@
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Mã HS</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Lớp</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Liên hệ</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Điểm TB</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Trạng thái</th>
-                    <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">Thao tác</th>
+                    <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Thao tác</th>
                 </tr>
             </thead>
 
@@ -194,36 +193,25 @@
                     </td>
 
                     <td class="px-6 py-4">
-                        <span class="text-sm font-bold text-gray-500">--</span>
-                    </td>
-
-                    <td class="px-6 py-4">
                         <span class="inline-flex items-center px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
                             <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
                             Đang học
                         </span>
                     </td>
 
-                    <td class="px-6 py-4">
-                        <div class="flex justify-end space-x-2">
-                            <a href="{{ route('api.admin.students.show', $student) }}"
-                            class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
-                                Xem
-                            </a>
-                            <a href="{{ route('api.admin.students.edit', $student) }}"
-                            class="p-2 text-yellow-600 hover:bg-yellow-50 rounded-lg">
-                                Sửa
-                            </a>
-                            <form method="POST"
-                                action="{{ route('api.admin.students.destroy', $student) }}"
-                                onsubmit="return confirm('Xóa học sinh này?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg">
-                                    Xóa
-                                </button>
-                            </form>
-                        </div>
+                    <td class="px-6 py-4 text-center space-x-2">
+                        <a href="{{ route('api.admin.students.show', $student) }}" class="text-blue-600">Xem</a>
+                        <a href="{{ route('api.admin.students.edit', $student) }}" class="text-yellow-600">Sửa</a>
+
+                        <form action="{{ route('api.admin.students.destroy', $student) }}"
+                            method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="text-red-600"
+                                    onclick="return confirm('Xóa giáo viên này?')">
+                                Xóa
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
