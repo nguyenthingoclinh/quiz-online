@@ -6,6 +6,10 @@ use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Exports\StudentsExport;
+use App\Imports\StudentsImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class StudentsController extends Controller
 {
@@ -80,4 +84,64 @@ class StudentsController extends Controller
 
         return back()->with('success', 'Đã xóa sinh viên');
     }
+
+    // Export CSV
+    public function exportCsv()
+    {
+        $students = User::where('role', UserRole::STUDENT)->get();
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=students.csv',
+        ];
+
+        $callback = function () use ($students) {
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, ['id', 'full_name', 'email', 'username', 'created_at']);
+
+            foreach ($students as $s) {
+                fputcsv($file, [
+                    $s->id,
+                    $s->full_name,
+                    $s->email,
+                    $s->username,
+                    $s->created_at,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    // Import CSV
+    public function importCsv(Request $request)
+    {
+        $request->validate([
+            'file' => 'required',
+        ]);
+
+        $file = fopen($request->file('file')->getRealPath(), 'r');
+
+        $header = fgetcsv($file);
+
+        while (($row = fgetcsv($file)) !== false) {
+            $data = array_combine($header, $row);
+
+            User::create([
+                'full_name' => $data['full_name'],
+                'email'     => $data['email'],
+                'username'  => $data['username'],
+                'password'  => Hash::make($data['password']),
+                'role'      => UserRole::STUDENT,
+            ]);
+        }
+
+        fclose($file);
+
+        return back()->with('success', 'Import học sinh thành công');
+    }
+
 }

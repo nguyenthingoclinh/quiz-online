@@ -113,6 +113,9 @@ Route::middleware('auth')->group(function () {
             Route::put('/students/{student}', [StudentsController::class, 'update'])->name('students.update');
             Route::delete('/students/{student}', [StudentsController::class, 'destroy'])->name('students.destroy');
         });
+
+        Route::get('/export-students', [StudentsController::class, 'exportCsv'])->name('students.export');
+        Route::post('/import-students', [StudentsController::class, 'importCsv'])->name('students.import');
     });
 
     // GIẢNG VIÊN
