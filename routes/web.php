@@ -142,7 +142,7 @@ Route::middleware('auth')->group(function () {
 
             // Questions
             Route::get('/questions', function () {
-                return 'Ngân hàng câu hỏi giáo viên';
+                return view('teacher.questions.qna');
             })->name('questions');
 
             // Students
@@ -152,7 +152,7 @@ Route::middleware('auth')->group(function () {
 
             // Results
             Route::get('/results', function () {
-                return 'Kết quả thi';
+                return view('teacher.results.index');
             })->name('results');
 
             // Reports
@@ -180,7 +180,7 @@ Route::middleware('auth')->group(function () {
     // SINH VIÊN
     Route::middleware(['auth', 'role:sinh_vien'])->group(function () {
         Route::get('/dashboard', fn () => view('dashboard'))
-        ->name('student.dashboard');
+        ->name('dashboard');
 
         Route::get('/history', function () {
             return view();
