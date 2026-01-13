@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExamsController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Auth;
@@ -97,22 +98,8 @@ Route::middleware('auth')->group(function () {
             })->name('settings');
         });
 
-        // Admin Routes API
-        Route::prefix('api/admin')->name('api.admin.')->group(function () {
-            Route::get('/teachers/create', [TeachersController::class, 'create'])->name('teachers.create');
-            Route::post('/teachers', [TeachersController::class, 'store'])->name('teachers.store');
-            Route::get('/teachers/{teacher}', [TeachersController::class, 'show'])->name('teachers.show');
-            Route::get('/teachers/{teacher}/edit', [TeachersController::class, 'edit'])->name('teachers.edit');
-            Route::put('/teachers/{teacher}', [TeachersController::class, 'update'])->name('teachers.update');
-            Route::delete('/teachers/{teacher}', [TeachersController::class, 'destroy'])->name('teachers.destroy');
-
-            Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
-            Route::post('/students', [StudentsController::class, 'store'])->name('students.store');
-            Route::get('/students/{student}', [StudentsController::class, 'show'])->name('students.show');
-            Route::get('/students/{student}/edit', [StudentsController::class, 'edit'])->name('students.edit');
-            Route::put('/students/{student}', [StudentsController::class, 'update'])->name('students.update');
-            Route::delete('/students/{student}', [StudentsController::class, 'destroy'])->name('students.destroy');
-        });
+        Route::get('/export-students', [StudentsController::class, 'exportCsv'])->name('students.export');
+        Route::post('/import-students', [StudentsController::class, 'importCsv'])->name('students.import');
     });
 
     // GIẢNG VIÊN
@@ -125,22 +112,16 @@ Route::middleware('auth')->group(function () {
             })->name('dashboard');
 
             // Exams
-            Route::get('/exams', function () {
-                return view('teacher.exams.index');
-            })->name('exams.index');
+            Route::get('/exams', [ExamsController::class, 'index'])->name('exams.index');
 
             Route::get('/exams/create', function () {
                 return view('teacher.exams.create');
             })->name('exams.create');
 
-            Route::post('/exams', function () {
-                return redirect()->route('teacher.exams.index');
-            })->name('exams.store');
-
             // Questions
             Route::get('/questions', function () {
                 return view('teacher.questions.qna');
-            })->name('questions');
+            })->name('questions.qna');
 
             // Students
             Route::get('/students', function () {
@@ -175,7 +156,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // SINH VIÊN
-    Route::middleware(['auth', 'role:sinh_vien'])->group(function () {
+    Route::middleware(['auth', 'role:sinh_vien,admin'])->group(function () {
         Route::get('/dashboard', fn () => view('dashboard'))
         ->name('dashboard');
 
@@ -199,5 +180,34 @@ Route::middleware('auth')->group(function () {
         Route::get('/exam/result/{id}', function ($id) {
             return view('exam.result');
         })->name('exam.result');
+    });
+
+    // Admin Routes API
+    Route::prefix('api/admin')->name('api.admin.')->group(function () {
+        Route::get('/teachers/create', [TeachersController::class, 'create'])->name('teachers.create');
+        Route::post('/teachers', [TeachersController::class, 'store'])->name('teachers.store');
+        Route::get('/teachers/{teacher}', [TeachersController::class, 'show'])->name('teachers.show');
+        Route::get('/teachers/{teacher}/edit', [TeachersController::class, 'edit'])->name('teachers.edit');
+        Route::put('/teachers/{teacher}', [TeachersController::class, 'update'])->name('teachers.update');
+        Route::delete('/teachers/{teacher}', [TeachersController::class, 'destroy'])->name('teachers.destroy');
+
+        Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
+        Route::post('/students', [StudentsController::class, 'store'])->name('students.store');
+        Route::get('/students/{student}', [StudentsController::class, 'show'])->name('students.show');
+        Route::get('/students/{student}/edit', [StudentsController::class, 'edit'])->name('students.edit');
+        Route::put('/students/{student}', [StudentsController::class, 'update'])->name('students.update');
+        Route::delete('/students/{student}', [StudentsController::class, 'destroy'])->name('students.destroy');
+    });
+
+    // exam Routes API
+    Route::prefix('api/exams')->name('api.teacher.')->group(function () {
+        Route::post('/', [ExamsController::class, 'store'])->name('exams.store');
+
+        Route::get('/exams/create', [ExamsController::class, 'create'])->name('exams.create');
+        Route::post('/exams', [ExamsController::class, 'store'])->name('exams.store');
+        Route::get('/exams/{teacher}', [ExamsController::class, 'show'])->name('exams.show');
+        Route::get('/exams/{teacher}/edit', [ExamsController::class, 'edit'])->name('exams.edit');
+        Route::put('/exams/{teacher}', [ExamsController::class, 'update'])->name('exams.update');
+        Route::delete('/exams/{teacher}', [ExamsController::class, 'destroy'])->name('exams.destroy');
     });
 });

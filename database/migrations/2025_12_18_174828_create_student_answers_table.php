@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('student_answers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('participant_id')->constrained('exam_participants')->cascadeOnDelete();
-            $table->foreignId('question_id')->constrained('question_bank');
+            $table->foreignId('question_id')->constrained('question_banks');
             $table->json('answer')->nullable();
             $table->float('score')->nullable();
             $table->timestamps();

@@ -43,4 +43,4 @@
     php artisan serve
 ```
 
-##### Hoàn thành, website sẽ chạy trên `http://127.0.0.1:8000`
+##### Hoàn thành, website sẽ chạy trên `http://localhost/quiz-online/public`

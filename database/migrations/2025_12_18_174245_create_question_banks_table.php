@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('question_bank', function (Blueprint $table) {
+        Schema::create('question_banks', function (Blueprint $table) {
             $table->id();
             $table->text('content');
             $table->enum('difficulty', ['easy', 'medium', 'hard']);
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('question_bank');
+        Schema::dropIfExists('question_banks');
     }
 };

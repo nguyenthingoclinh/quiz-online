@@ -111,6 +111,12 @@
     </div>
 </div>
 
+@if (session('success'))
+<div class="mb-4 rounded bg-green-100 px-4 py-3 text-green-700">
+    {{ session('success') }}
+</div>
+@endif
+
 <!-- Students Table -->
 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
     <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -119,21 +125,33 @@
             <p class="text-sm text-gray-600 mt-1">Quản lý thông tin học sinh trong hệ thống</p>
         </div>
         <div class="flex items-center space-x-2">
-            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition" title="Import Excel">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                </svg>
-            </button>
-            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition" title="Export Excel">
+            {{-- 1. Form Import CSV --}}
+            <form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data" id="importForm">
+                @csrf
+                <input type="file" name="file" id="fileInput" class="hidden" accept=".csv, .xlsx" onchange="document.getElementById('importForm').submit()">
+
+                <button type="button" onclick="document.getElementById('fileInput').click()"
+                        class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                        title="Import Excel/CSV">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                </button>
+            </form>
+
+            {{-- 2. Export CSV --}}
+            <a href="{{ route('students.export') }}" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition inline-block" title="Export CSV">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                 </svg>
-            </button>
-            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition" title="In danh sách">
+            </a>
+
+            {{-- 3. Show PDF --}}
+            {{-- <a href="{{ route('api.admin.students.print') }}" target="_blank" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition inline-block" title="In danh sách">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
                 </svg>
-            </button>
+            </a> --}}
         </div>
     </div>
 
@@ -148,9 +166,8 @@
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Mã HS</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Lớp</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Liên hệ</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Điểm TB</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Trạng thái</th>
-                    <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">Thao tác</th>
+                    <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Thao tác</th>
                 </tr>
             </thead>
 
@@ -194,36 +211,25 @@
                     </td>
 
                     <td class="px-6 py-4">
-                        <span class="text-sm font-bold text-gray-500">--</span>
-                    </td>
-
-                    <td class="px-6 py-4">
                         <span class="inline-flex items-center px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
                             <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
                             Đang học
                         </span>
                     </td>
 
-                    <td class="px-6 py-4">
-                        <div class="flex justify-end space-x-2">
-                            <a href="{{ route('api.admin.students.show', $student) }}"
-                            class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
-                                Xem
-                            </a>
-                            <a href="{{ route('api.admin.students.edit', $student) }}"
-                            class="p-2 text-yellow-600 hover:bg-yellow-50 rounded-lg">
-                                Sửa
-                            </a>
-                            <form method="POST"
-                                action="{{ route('api.admin.students.destroy', $student) }}"
-                                onsubmit="return confirm('Xóa học sinh này?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg">
-                                    Xóa
-                                </button>
-                            </form>
-                        </div>
+                    <td class="px-6 py-4 text-center space-x-2">
+                        <a href="{{ route('api.admin.students.show', $student) }}" class="text-blue-600">Xem</a>
+                        <a href="{{ route('api.admin.students.edit', $student) }}" class="text-yellow-600">Sửa</a>
+
+                        <form action="{{ route('api.admin.students.destroy', $student) }}"
+                            method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="text-red-600"
+                                    onclick="return confirm('Xóa sinh viên này?')">
+                                Xóa
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

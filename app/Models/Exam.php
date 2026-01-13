@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model
 {
-    protected $fillable = ['title','exam_type','start_time','end_time','duration','created_by'];
+    protected $fillable = ['title', 'description', 'exam_type', 'subject', 'grade', 'duration', 'pass_score', 'start_at', 'created_by'];
 
     public function questions() {
         return $this->hasMany(ExamQuestion::class);
