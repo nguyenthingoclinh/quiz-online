@@ -177,7 +177,7 @@ Route::middleware('auth')->group(function () {
     // SINH VIÊN
     Route::middleware(['auth', 'role:sinh_vien'])->group(function () {
         Route::get('/dashboard', fn () => view('dashboard'))
-        ->name('student.dashboard');
+        ->name('dashboard');
 
         Route::get('/history', function () {
             return view();
