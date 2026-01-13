@@ -2,8 +2,23 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TeachersController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    if (! Auth::check()) {
+        return redirect()->route('login');
+    }
+
+    return match (Auth::user()->role->value) {
+        'admin'      => redirect()->route('admin.dashboard'),
+        'giang_vien' => redirect()->route('teacher.dashboard'),
+        'sinh_vien'  => redirect()->route('dashboard'),
+        default      => abort(403),
+    };
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +35,8 @@ Route::middleware('guest')->group(function () {
 | AUTHENTICATED
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
 
+Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
 
@@ -35,9 +50,7 @@ Route::middleware('auth')->group(function () {
             })->name('dashboard');
 
             // Users Management
-            Route::get('/users/students', function () {
-                return 'Quản lý học sinh';
-            })->name('users.students');
+            Route::get('/users/students', [AdminController::class, 'students'])->name('users.students');
 
             Route::get('/users/teachers', [AdminController::class, 'teachers'])->name('users.teachers');
 
@@ -86,13 +99,19 @@ Route::middleware('auth')->group(function () {
 
         // Admin Routes API
         Route::prefix('api/admin')->name('api.admin.')->group(function () {
-            Route::get('/teachers/create', [AdminController::class, 'create'])->name('teachers.create');
-            Route::post('/teachers', [AdminController::class, 'store'])->name('teachers.store');
+            Route::get('/teachers/create', [TeachersController::class, 'create'])->name('teachers.create');
+            Route::post('/teachers', [TeachersController::class, 'store'])->name('teachers.store');
+            Route::get('/teachers/{teacher}', [TeachersController::class, 'show'])->name('teachers.show');
+            Route::get('/teachers/{teacher}/edit', [TeachersController::class, 'edit'])->name('teachers.edit');
+            Route::put('/teachers/{teacher}', [TeachersController::class, 'update'])->name('teachers.update');
+            Route::delete('/teachers/{teacher}', [TeachersController::class, 'destroy'])->name('teachers.destroy');
 
-            Route::get('/teachers/{teacher}', [AdminController::class, 'show'])->name('teachers.show');
-            Route::get('/teachers/{teacher}/edit', [AdminController::class, 'edit'])->name('teachers.edit');
-            Route::put('/teachers/{teacher}', [AdminController::class, 'update'])->name('teachers.update');
-            Route::delete('/teachers/{teacher}', [AdminController::class, 'destroy'])->name('teachers.destroy');
+            Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
+            Route::post('/students', [StudentsController::class, 'store'])->name('students.store');
+            Route::get('/students/{student}', [StudentsController::class, 'show'])->name('students.show');
+            Route::get('/students/{student}/edit', [StudentsController::class, 'edit'])->name('students.edit');
+            Route::put('/students/{student}', [StudentsController::class, 'update'])->name('students.update');
+            Route::delete('/students/{student}', [StudentsController::class, 'destroy'])->name('students.destroy');
         });
     });
 
@@ -157,8 +176,8 @@ Route::middleware('auth')->group(function () {
 
     // SINH VIÊN
     Route::middleware(['auth', 'role:sinh_vien'])->group(function () {
-        // Route::get('/student', fn () => view('student.dashboard'))
-        // ->name('student.dashboard');
+        Route::get('/dashboard', fn () => view('dashboard'))
+        ->name('student.dashboard');
 
         Route::get('/history', function () {
             return view();
