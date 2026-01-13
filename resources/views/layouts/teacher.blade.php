@@ -48,7 +48,7 @@
                     Học sinh của tôi
                 </a>
 
-                <a href="{{ route('teacher.results.index') }}" class="teacher-link">
+                <a href="{{ route('teacher.results') }}" class="teacher-link">
                     Kết quả thi
                 </a>
 

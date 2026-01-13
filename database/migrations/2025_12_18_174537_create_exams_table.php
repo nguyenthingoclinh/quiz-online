@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->text('description')->nullable();
             $table->enum('exam_type', ['toan a3', 'giai tich', 'c#']);
+            $table->string('subject');
+            $table->string('grade')->nullable();
             $table->integer('duration');
-            $table->integer('pass_score'); 
+            $table->integer('pass_score');
+            $table->dateTime('start_at')->nullable();
             $table->foreignId('created_by')->constrained('users');
             $table->timestamps();
         });

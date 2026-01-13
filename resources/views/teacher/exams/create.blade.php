@@ -4,7 +4,14 @@
 @section('page-title', 'Tạo bộ đề mới')
 
 @section('content')
-<form action="{{ route('teacher.exams.store') }}" method="POST" class="exam-form">
+
+@if (session('success'))
+    <div class="mb-4 rounded bg-green-100 px-4 py-3 text-green-700">
+        {{ session('success') }}
+    </div>
+@endif
+
+<form action="{{ route('api.teacher.exams.store') }}" method="POST" class="exam-form">
     @csrf
 
     <div class="exam-grid">
@@ -85,20 +92,8 @@
                     </div>
 
                     <div>
-                        <label class="form-label">
-                            Số câu hỏi <span class="required">*</span>
-                        </label>
-                        <input type="number" name="total_questions" min="1" required class="form-input">
-                    </div>
-
-                    <div>
                         <label class="form-label">Ngày bắt đầu</label>
                         <input type="datetime-local" name="start_date" class="form-input">
-                    </div>
-
-                    <div>
-                        <label class="form-label">Ngày kết thúc</label>
-                        <input type="datetime-local" name="end_date" class="form-input">
                     </div>
                 </div>
             </div>
@@ -166,9 +161,6 @@
                                 <input type="text" name="questions[0][answer_d]" required class="answer-input">
                             </div>
                         </div>
-
-                        <label class="form-label">Giải thích (tuỳ chọn)</label>
-                        <textarea name="questions[0][explanation]" class="form-textarea"></textarea>
                     </div>
                 </div>
             </div>
@@ -184,32 +176,32 @@
                     Xuất bản ngay
                 </button>
 
-                <button type="submit" name="status" value="draft"
-                        class="btn-secondary w-full">
+                <button type="submit" name="status" value="draft" disabled
+                        class="btn-secondary w-full cursor-not-allowed">
                     Lưu nháp
                 </button>
 
-                <div class="sidebar-settings">
-                    <label class="checkbox-row">
+                {{-- <div class="sidebar-settings flex flex-wrap gap-4 mt-4">
+                    <label class="checkbox-row flex gap-2 items-center">
                         <input type="checkbox" name="shuffle_questions">
                         Xáo trộn câu hỏi
                     </label>
 
-                    <label class="checkbox-row">
+                    <label class="checkbox-row flex gap-2 items-center">
                         <input type="checkbox" name="shuffle_answers">
                         Xáo trộn đáp án
                     </label>
 
-                    <label class="checkbox-row">
+                    <label class="checkbox-row flex gap-2 items-center">
                         <input type="checkbox" name="show_results" checked>
                         Hiển thị kết quả
                     </label>
 
-                    <label class="checkbox-row">
+                    <label class="checkbox-row flex gap-2 items-center">
                         <input type="checkbox" name="allow_review" checked>
                         Cho phép xem lại
                     </label>
-                </div>
+                </div> --}}
             </div>
         </aside>
     </div>
@@ -242,9 +234,6 @@ function addQuestion() {
                     </div>
                 </div>
             `).join('')}
-
-            <label class="form-label">Giải thích</label>
-            <textarea name="questions[${index}][explanation]" class="form-textarea"></textarea>
         </div>
     `;
 
