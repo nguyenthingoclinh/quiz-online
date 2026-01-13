@@ -120,7 +120,7 @@ Route::middleware('auth')->group(function () {
 
             // Questions
             Route::get('/questions', function () {
-                return 'Ngân hàng câu hỏi giáo viên';
+                return view('teacher.questions.qna');
             })->name('questions');
 
             // Students
@@ -130,7 +130,7 @@ Route::middleware('auth')->group(function () {
 
             // Results
             Route::get('/results', function () {
-                return 'Kết quả thi';
+                return view('teacher.results.index');
             })->name('results');
 
             // Reports
