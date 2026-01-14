@@ -83,10 +83,10 @@
                             <span class="badge bg-green-100 text-green-700">Đang hoạt động</span>
                         </td>
                         <td class="px-6 py-4 text-center space-x-2">
-                            <a href="{{ route('api.teacher.exams.show', $exam) }}" class="text-blue-600">Xem</a>
-                            <a href="{{ route('api.teacher.exams.edit', $exam) }}" class="text-yellow-600">Sửa</a>
+                            <a href="{{ route('api.exams.show', $exam) }}" class="text-blue-600">Xem</a>
+                            <a href="{{ route('api.exams.edit', $exam) }}" class="text-yellow-600">Sửa</a>
 
-                            <form action="{{ route('api.teacher.exams.destroy', $exam) }}"
+                            <form action="{{ route('api.exams.destroy', $exam) }}"
                                 method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')

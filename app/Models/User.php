@@ -13,7 +13,7 @@ class User extends Authenticatable
     protected $casts = ['role' => UserRole::class];
 
     public function questions() {
-        return $this->hasMany(Question::class, 'created_by');
+        return $this->hasMany(QuestionBank::class, 'created_by');
     }
 
     public function exams() {

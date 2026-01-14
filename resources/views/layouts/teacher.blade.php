@@ -35,7 +35,7 @@
                     Dashboard
                 </a>
 
-                <a href="{{ route('teacher.exams.index') }}"
+                <a href="{{ route('teacher.users.exams') }}"
                    class="teacher-link {{ request()->routeIs('teacher.exams.*') ? 'active' : '' }}">
                     Quản lý đề thi
                 </a>
@@ -91,7 +91,7 @@
             <h1 class="teacher-page-title">@yield('page-title', 'Dashboard')</h1>
 
             <div class="teacher-header-actions">
-                <a href="{{ route('teacher.exams.create') }}" class="teacher-btn-primary">
+                <a href="{{ route('api.exams.create') }}" class="teacher-btn-primary">
                     Tạo đề mới
                 </a>
             </div>
