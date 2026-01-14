@@ -112,11 +112,7 @@ Route::middleware('auth')->group(function () {
             })->name('dashboard');
 
             // Exams
-            Route::get('/exams', [ExamsController::class, 'index'])->name('exams.index');
-
-            Route::get('/exams/create', function () {
-                return view('teacher.exams.create');
-            })->name('exams.create');
+            Route::get('/exams', [ExamsController::class, 'index'])->name('users.exams');
 
             // Questions
             Route::get('/questions', function () {
@@ -200,14 +196,12 @@ Route::middleware('auth')->group(function () {
     });
 
     // exam Routes API
-    Route::prefix('api/exams')->name('api.teacher.')->group(function () {
-        Route::post('/', [ExamsController::class, 'store'])->name('exams.store');
-
-        Route::get('/exams/create', [ExamsController::class, 'create'])->name('exams.create');
-        Route::post('/exams', [ExamsController::class, 'store'])->name('exams.store');
-        Route::get('/exams/{teacher}', [ExamsController::class, 'show'])->name('exams.show');
-        Route::get('/exams/{teacher}/edit', [ExamsController::class, 'edit'])->name('exams.edit');
-        Route::put('/exams/{teacher}', [ExamsController::class, 'update'])->name('exams.update');
-        Route::delete('/exams/{teacher}', [ExamsController::class, 'destroy'])->name('exams.destroy');
+    Route::prefix('api/exams')->name('api.exams.')->group(function () {
+        Route::get('/exams/create', function () {return view('teacher.exams.create');})->name('create');
+        Route::post('/create', [ExamsController::class, 'store'])->name('store');
+        Route::get('/{exam}', [ExamsController::class, 'show'])->name('show');
+        Route::get('/{exam}/edit', [ExamsController::class, 'edit'])->name('edit');
+        Route::put('/{exam}', [ExamsController::class, 'update'])->name('update');
+        Route::delete('/{exam}', [ExamsController::class, 'destroy'])->name('destroy');
     });
 });

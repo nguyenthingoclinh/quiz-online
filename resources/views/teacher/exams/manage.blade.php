@@ -39,7 +39,7 @@
         </select>
     </div>
 
-    <!--<a href="{{ route('teacher.exams.create') }}"
+    <!--<a href="{{ route('api.exams.create') }}"
        class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white
               font-semibold rounded-lg shadow-lg hover:shadow-xl transition
               transform hover:-translate-y-0.5 flex items-center justify-center">

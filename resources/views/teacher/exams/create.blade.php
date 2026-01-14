@@ -11,7 +11,7 @@
     </div>
 @endif
 
-<form action="{{ route('api.teacher.exams.store') }}" method="POST" class="exam-form">
+<form action="{{ route('api.exams.store') }}" method="POST" class="exam-form">
     @csrf
 
     <div class="exam-grid">

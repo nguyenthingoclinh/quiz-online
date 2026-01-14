@@ -101,7 +101,7 @@
             <span class="font-semibold">Thêm người dùng</span>
         </a>
 
-        <a href="{{ route('teacher.exams.create') }}"
+        <a href="{{ route('api.exams.create') }}"
            class="bg-white/10 hover:bg-white/20 rounded-xl p-4 transition flex items-center">
             <span class="font-semibold">Tạo bộ đề</span>
         </a>

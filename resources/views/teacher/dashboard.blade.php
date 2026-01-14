@@ -85,7 +85,7 @@
     <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200">
         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
             <h2 class="text-lg font-bold text-gray-900">Bài thi đang hoạt động</h2>
-            <a href="{{ route('teacher.exams.index') }}" class="text-sm text-purple-600 hover:text-purple-700 font-semibold">
+            <a href="{{ route('teacher.users.exams') }}" class="text-sm text-purple-600 hover:text-purple-700 font-semibold">
                 Xem tất cả →
             </a>
         </div>
