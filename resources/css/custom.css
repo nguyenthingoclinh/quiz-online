@@ -1,0 +1,1262 @@
+/* ===================================
+   Custom Styles - Quiz Online System
+   =================================== */
+
+/* =====================
+   Animations (CSS thuần)
+   ===================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* =====================
+   Components Layer
+   ===================== */
+@layer components {
+
+    /* Utility Classes */
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    .slide-in { animation: slideIn 0.3s ease-out; }
+
+    /* Sidebar */
+    .sidebar-link { transition: all 0.2s ease; }
+    .sidebar-link:hover { transform: translateX(4px); }
+    .sidebar-link.active {
+        background: linear-gradient(90deg, rgba(59,130,246,0.1) 0%, transparent 100%);
+        border-left: 3px solid #3b82f6;
+    }
+
+    /* Card Hover */
+    .card-hover {
+        transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Buttons */
+    .btn-primary {
+        @apply px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white
+               font-semibold rounded-xl shadow-lg transition
+               transform hover:-translate-y-0.5;
+    }
+
+    .btn-secondary {
+        @apply px-6 py-3 bg-gray-100 hover:bg-gray-200
+               text-gray-700 font-semibold rounded-xl transition;
+    }
+
+    .btn-success {
+        @apply px-6 py-3 bg-green-600 hover:bg-green-700
+               text-white font-semibold rounded-xl shadow-lg transition;
+    }
+
+    .btn-danger {
+        @apply px-6 py-3 bg-red-600 hover:bg-red-700
+               text-white font-semibold rounded-xl shadow-lg transition;
+    }
+
+    /* Badges */
+    .badge { @apply px-3 py-1 text-xs font-semibold rounded-full; }
+    .badge-primary { @apply bg-blue-100 text-blue-700; }
+    .badge-success { @apply bg-green-100 text-green-700; }
+    .badge-warning { @apply bg-yellow-100 text-yellow-700; }
+    .badge-danger  { @apply bg-red-100 text-red-700; }
+    .badge-info    { @apply bg-purple-100 text-purple-700; }
+
+    /* Forms */
+    .form-input {
+        @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl
+               focus:ring-4 focus:ring-blue-100 focus:border-blue-500
+               transition outline-none;
+    }
+
+    .form-label {
+        @apply block text-sm font-semibold text-gray-700 mb-2;
+    }
+
+    .form-error {
+        @apply text-sm text-red-600 mt-1;
+    }
+
+    /* Stats */
+    .stats-card {
+        @apply bg-white rounded-xl shadow-sm border border-gray-100
+               p-6 hover:shadow-lg transition;
+    }
+
+    .stats-icon {
+        @apply w-12 h-12 rounded-xl flex items-center justify-center;
+    }
+
+    /* Tables */
+    .table-hover tbody tr:hover { @apply bg-gray-50; }
+    .table-striped tbody tr:nth-child(odd) { @apply bg-gray-50; }
+
+    /* Spinner */
+    .spinner {
+        border: 3px solid #f3f4f6;
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    /* Toast */
+    .toast {
+        @apply fixed top-4 right-4 bg-white rounded-xl shadow-2xl
+               border border-gray-200 p-4 z-50;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .toast-success { @apply border-l-4 border-green-500; }
+    .toast-error   { @apply border-l-4 border-red-500; }
+    .toast-warning { @apply border-l-4 border-yellow-500; }
+    .toast-info    { @apply border-l-4 border-blue-500; }
+
+    /* Modal */
+    .modal-overlay {
+        @apply fixed inset-0 bg-black bg-opacity-50 z-40;
+    }
+
+    .modal-content {
+        @apply fixed top-1/2 left-1/2 transform
+               -translate-x-1/2 -translate-y-1/2
+               bg-white rounded-2xl shadow-2xl z-50
+               max-w-2xl w-full max-h-[90vh] overflow-y-auto;
+    }
+
+    /* Exam */
+    .timer-warning {
+        @apply text-red-600;
+        animation: pulse 1s ease-in-out infinite;
+    }
+
+    /* Question Nav */
+    .question-nav-item {
+        @apply w-10 h-10 rounded-lg font-semibold transition cursor-pointer;
+    }
+
+    .question-nav-item.answered {
+        @apply bg-blue-600 text-white hover:bg-blue-700;
+    }
+
+    .question-nav-item.unanswered {
+        @apply border-2 border-gray-300 text-gray-700 hover:bg-gray-50;
+    }
+
+    .question-nav-item.current {
+        @apply ring-4 ring-blue-300;
+    }
+
+    /* Progress */
+    .progress-bar {
+        @apply w-full bg-gray-200 rounded-full h-2;
+    }
+
+    .progress-fill {
+        @apply bg-blue-600 h-2 rounded-full transition-all duration-300;
+    }
+
+    /* Login Page */
+    .login-wrapper {
+        @apply min-h-screen flex items-center justify-center px-4 py-12
+               bg-gradient-to-br from-blue-50 via-white to-blue-100;
+    }
+
+    .login-container { @apply max-w-md w-full; }
+
+    .login-logo {
+        @apply inline-flex items-center justify-center
+               w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg;
+    }
+
+    .login-title { @apply text-3xl font-bold text-gray-900; }
+
+    .login-card {
+        @apply bg-white rounded-2xl shadow-xl
+               p-8 border border-gray-100;
+    }
+
+    .login-form { @apply space-y-6; }
+
+    .login-input {
+        @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl
+               focus:ring-4 focus:ring-blue-100 focus:border-blue-500
+               transition outline-none;
+    }
+
+    .login-remember {
+        @apply w-4 h-4 text-blue-600 border-gray-300 rounded
+               focus:ring-blue-500 focus:ring-2;
+    }
+
+    .login-link {
+        @apply text-sm font-medium text-blue-600
+               hover:text-blue-700 transition;
+    }
+
+    .login-btn {
+        @apply w-full bg-blue-600 hover:bg-blue-700
+               text-white font-semibold py-3 px-4 rounded-xl
+               shadow-lg hover:shadow-xl transform
+               hover:-translate-y-0.5 transition;
+    }
+
+    .login-footer {
+        @apply mt-8 text-center text-sm text-gray-500;
+    }
+
+    /* Skeleton */
+    .skeleton { @apply bg-gray-200 animate-pulse rounded; }
+    .skeleton-text { @apply h-4 bg-gray-200 animate-pulse rounded; }
+    .skeleton-circle { @apply bg-gray-200 animate-pulse rounded-full; }
+
+    /* Accessibility */
+    .focus-visible:focus {
+        @apply outline-none ring-4 ring-blue-500 ring-opacity-50;
+    }    
+}
+
+/* ===================================
+   Exam List Page (index.blade.php)
+   =================================== */
+
+@layer components {
+
+    /* ===== FILTERS ===== */
+    .exam-filter-box {
+        @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6;
+    }
+
+    .exam-search-input {
+        @apply w-full px-4 py-2 border border-gray-300 rounded-lg
+               focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    }
+
+    .exam-select {
+        @apply px-4 py-2 border border-gray-300 rounded-lg
+               focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    }
+
+    /* ===== GRID ===== */
+    .exam-grid {
+        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+    }
+
+    /* ===== CARD ===== */
+    .exam-card {
+        @apply bg-white rounded-xl shadow-sm border-2 border-gray-200
+               hover:border-blue-300 hover:shadow-lg transition overflow-hidden;
+    }
+
+    .exam-card-warning {
+        @apply border-yellow-300 hover:border-yellow-400;
+    }
+
+    .exam-card-disabled {
+        @apply opacity-75;
+    }
+
+    .exam-card-header {
+        @apply p-6;
+    }
+
+    .exam-card-footer {
+        @apply px-6 py-4 bg-gray-50 border-t border-gray-200;
+    }
+
+    .exam-card-footer-warning {
+        @apply bg-yellow-50 border-yellow-200;
+    }
+
+    .exam-card-footer-purple {
+        @apply bg-purple-50 border-purple-200;
+    }
+
+    /* ===== BADGE ===== */
+    .exam-badge {
+        @apply px-3 py-1 text-xs font-semibold rounded-full;
+    }
+
+    .exam-badge-success {
+        @apply bg-green-100 text-green-700;
+    }
+
+    .exam-badge-info {
+        @apply bg-blue-100 text-blue-700;
+    }
+
+    .exam-badge-warning {
+        @apply bg-yellow-100 text-yellow-700 animate-pulse;
+    }
+
+    .exam-badge-danger {
+        @apply bg-red-100 text-red-700;
+    }
+
+    .exam-badge-purple {
+        @apply bg-purple-100 text-purple-700;
+    }
+
+    /* ===== TITLE & DESC ===== */
+    .exam-title {
+        @apply text-lg font-bold text-gray-900 mb-2;
+    }
+
+    .exam-desc {
+        @apply text-sm text-gray-600 mb-4;
+    }
+
+    /* ===== META INFO ===== */
+    .exam-meta {
+        @apply space-y-2 mb-4;
+    }
+
+    .exam-meta-item {
+        @apply flex items-center text-sm text-gray-600;
+    }
+
+    .exam-meta-danger {
+        @apply text-red-600;
+    }
+
+    .exam-meta-purple {
+        @apply text-purple-600;
+    }
+
+    /* ===== PROGRESS ===== */
+    .exam-progress {
+        @apply w-full bg-gray-200 rounded-full h-2;
+    }
+
+    .exam-progress-bar {
+        @apply h-2 rounded-full bg-yellow-500 transition-all;
+    }
+
+    /* ===== BUTTON ===== */
+    .exam-btn-primary {
+        @apply block w-full py-2 bg-blue-600 hover:bg-blue-700
+               text-white text-center font-semibold rounded-lg transition;
+    }
+
+    .exam-btn-warning {
+        @apply block w-full py-2 bg-yellow-600 hover:bg-yellow-700
+               text-white text-center font-semibold rounded-lg transition;
+    }
+
+    .exam-btn-disabled {
+        @apply block w-full py-2 bg-gray-300 text-gray-500
+               text-center font-semibold rounded-lg cursor-not-allowed;
+    }
+
+    .exam-btn-secondary {
+        @apply block w-full py-2 bg-gray-100 hover:bg-gray-200
+               text-gray-700 text-center font-semibold rounded-lg transition;
+    }
+    
+}
+
+/* ===================================
+   RESULT PAGE - KẾT QUẢ BÀI THI
+   =================================== */
+@layer components {
+
+    /* Layout */
+    .result-container {
+        @apply max-w-5xl mx-auto;
+    }
+
+    /* Card */
+    .result-card {
+        @apply bg-white rounded-2xl shadow-xl border border-gray-200
+               overflow-hidden mb-6;
+    }
+
+    /* Header */
+    .result-header {
+        @apply bg-gradient-to-r from-blue-600 to-blue-700
+               p-8 text-center text-white;
+    }
+
+    .result-icon {
+        @apply inline-flex items-center justify-center
+               w-24 h-24 bg-white/20 backdrop-blur
+               rounded-full mb-4 text-4xl font-bold;
+    }
+
+    .result-title {
+        @apply text-4xl font-bold mb-2 text-white;
+    }
+
+    .result-subtitle {
+        @apply text-blue-100;
+    }
+
+    /* Score section */
+    .result-body {
+        @apply p-8;
+    }
+
+    .score-grid {
+        @apply grid grid-cols-1 md:grid-cols-3 gap-6 mb-8;
+    }
+
+    .score-box {
+        @apply text-center p-6 rounded-xl;
+    }
+
+    .score-number {
+        @apply text-5xl font-bold mb-2;
+    }
+
+    .score-label {
+        @apply text-gray-600 font-medium;
+    }
+
+    .score-blue {
+        @apply bg-blue-50 text-blue-600;
+    }
+
+    .score-green {
+        @apply bg-green-50 text-green-600;
+    }
+
+    .score-purple {
+        @apply bg-purple-50 text-purple-600;
+    }
+
+    /* Action buttons */
+    .result-actions {
+        @apply flex flex-wrap gap-4 justify-center;
+    }
+
+    /* Review section */
+    .review-card {
+        @apply bg-white rounded-2xl shadow-sm border
+               border-gray-200 p-6;
+    }
+
+    .review-title {
+        @apply text-xl font-bold text-gray-900 mb-6;
+    }
+
+    .review-item {
+        @apply border-2 rounded-xl p-4;
+    }
+
+    .review-correct {
+        @apply border-green-200 bg-green-50;
+    }
+
+    .review-wrong {
+        @apply border-red-200 bg-red-50;
+    }
+
+    .review-icon {
+        @apply w-8 h-8 rounded-full text-white
+               flex items-center justify-center
+               font-bold flex-shrink-0;
+    }
+
+    .icon-correct {
+        @apply bg-green-600;
+    }
+
+    .icon-wrong {
+        @apply bg-red-600;
+    }
+
+    .review-content {
+        @apply ml-4 flex-1;
+    }
+
+    .review-header {
+        @apply flex items-center justify-between mb-2;
+    }
+
+    .review-question {
+        @apply font-semibold text-gray-900;
+    }
+
+    .review-status-correct {
+        @apply text-green-600 font-semibold;
+    }
+
+    .review-status-wrong {
+        @apply text-red-600 font-semibold;
+    }
+
+    .answer-tag {
+        @apply ml-2 px-3 py-1 text-white
+               text-sm font-semibold rounded-lg;
+    }
+
+    .answer-correct {
+        @apply bg-green-600;
+    }
+
+    .answer-wrong {
+        @apply bg-red-600;
+    }
+
+    .explain-box {
+        @apply mt-3 p-3 bg-white rounded-lg
+               text-sm text-gray-600;
+    }
+}
+
+@layer components {
+
+    /* ===== PAGE LÀM BÀI THI ===== */
+    .exam-page {
+        @apply min-h-screen bg-gray-50 py-8;
+    }
+
+    .exam-container {
+        @apply max-w-7xl mx-auto px-4;
+    }
+
+    /* ===== HEADER + TIMER ===== */
+    .exam-header {
+        @apply bg-white rounded-xl shadow-sm border border-gray-200
+               p-6 mb-6 sticky top-4 z-10;
+    }
+
+    .exam-header-top {
+        @apply flex items-center justify-between;
+    }
+
+    .exam-title {
+        @apply text-2xl font-bold text-gray-900;
+    }
+
+    .exam-subtitle {
+        @apply text-gray-600 mt-1;
+    }
+
+    .timer-box {
+        @apply flex items-center space-x-6;
+    }
+
+    .timer-display {
+        @apply text-center;
+    }
+
+    .timer-time {
+        @apply text-3xl font-bold text-red-500;
+    }
+
+    .timer-label {
+        @apply text-xs text-gray-500 mt-1;
+    }
+
+    .submit-btn {
+        @apply px-6 py-3 bg-blue-600 hover:bg-blue-700
+               text-white font-semibold rounded-xl
+               shadow-lg transition;
+    }
+
+    /* ===== PROGRESS ===== */
+    .progress-wrapper {
+        @apply mt-4;
+    }
+
+    .progress-info {
+        @apply flex items-center justify-between text-sm mb-2;
+    }
+
+    .progress-bar-bg {
+        @apply w-full bg-gray-200 rounded-full h-2;
+    }
+
+    .progress-bar {
+        @apply bg-blue-600 h-2 rounded-full;
+    }
+
+    /* ===== LAYOUT ===== */
+    .exam-grid {
+        @apply grid grid-cols-1 lg:grid-cols-4 gap-6;
+    }
+
+    .exam-main {
+        @apply lg:col-span-3 space-y-6;
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .question-card {
+        @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
+    }
+
+    .question-header {
+        @apply flex items-start justify-between mb-4;
+    }
+
+    .question-title {
+        @apply text-lg font-bold text-gray-900;
+    }
+
+    /* ===== ANSWER (TẠO ĐỀ) ===== */
+    .answer-row {
+        @apply flex items-center gap-3 mb-3;
+    }
+
+    .answer-input {
+        @apply flex-1 px-4 py-3
+            border-2 border-gray-200
+            rounded-xl
+            focus:ring-4 focus:ring-blue-100
+            focus:border-blue-500
+            transition outline-none;
+    }
+
+    .answer-row input[type="radio"] {
+        @apply w-4 h-4 text-blue-600 cursor-pointer;
+    }
+
+    .answer-row input[type="radio"]:checked + .answer-input {
+        @apply border-green-400 bg-green-50;
+    }
+
+    .badge-answered {
+        @apply px-3 py-1 bg-green-100 text-green-700
+               text-xs font-semibold rounded-full;
+    }
+
+    .badge-unanswered {
+        @apply px-3 py-1 bg-gray-100 text-gray-600
+               text-xs font-semibold rounded-full;
+    }
+
+    .question-text {
+        @apply text-gray-800 leading-relaxed mb-6;
+    }
+
+    /* ===== ANSWERS ===== */
+    .answer-list {
+        @apply space-y-3;
+    }
+
+    .answer-option {
+        @apply flex items-center p-4 border-2 rounded-xl
+               cursor-pointer transition;
+    }
+
+    .answer-default {
+        @apply border-gray-200 hover:border-gray-300;
+    }
+
+    .answer-selected {
+        @apply border-blue-500 bg-blue-50;
+    }
+
+    .answer-radio {
+        @apply w-5 h-5 text-blue-600;
+    }
+
+    .answer-text {
+        @apply ml-3 text-gray-900 font-medium;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .question-nav {
+        @apply flex items-center justify-between;
+    }
+
+    .btn-prev {
+        @apply px-6 py-3 bg-gray-100 hover:bg-gray-200
+               text-gray-700 font-semibold rounded-xl
+               transition disabled:opacity-50;
+    }
+
+    .btn-next {
+        @apply px-6 py-3 bg-blue-600 hover:bg-blue-700
+               text-white font-semibold rounded-xl
+               transition;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .exam-sidebar {
+        @apply lg:col-span-1;
+    }
+
+    .sidebar-box {
+        @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-32;
+    }
+
+    .sidebar-title {
+        @apply font-bold text-gray-900 mb-4;
+    }
+
+    .question-nav-grid {
+        @apply grid grid-cols-5 gap-2 mb-6;
+    }
+
+    .nav-btn-answered {
+        @apply w-10 h-10 bg-blue-600 text-white
+               font-semibold rounded-lg
+               hover:bg-blue-700 transition;
+    }
+
+    .nav-btn-unanswered {
+        @apply w-10 h-10 border-2 border-gray-300
+               text-gray-700 font-semibold rounded-lg
+               hover:bg-gray-50 transition;
+    }
+
+    .legend {
+        @apply space-y-2 text-sm;
+    }
+
+    .legend-item {
+        @apply flex items-center;
+    }
+
+    .legend-answered {
+        @apply w-4 h-4 bg-blue-600 rounded mr-2;
+    }
+
+    .legend-unanswered {
+        @apply w-4 h-4 border-2 border-gray-300 rounded mr-2;
+    }
+}
+
+@layer components {
+
+    /* ===== APP LAYOUT ===== */
+    .app-body {
+        @apply bg-gray-50;
+    }
+
+    .app-wrapper {
+        @apply flex h-screen overflow-hidden;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+        @apply w-64 bg-white border-r border-gray-200 flex-shrink-0;
+    }
+
+    .sidebar-inner {
+        @apply h-full flex flex-col;
+    }
+
+    .sidebar-logo {
+        @apply h-16 flex items-center px-6 border-b border-gray-200 space-x-3;
+    }
+
+    .logo-box {
+        @apply w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center;
+    }
+
+    .logo-icon {
+        @apply w-6 h-6 text-white;
+    }
+
+    .logo-text {
+        @apply font-bold text-gray-900 text-lg;
+    }
+
+    .sidebar-menu {
+        @apply flex-1 overflow-y-auto py-4;
+    }
+
+    .sidebar-link {
+        @apply block px-6 py-3 text-gray-700 font-medium transition;
+    }
+
+    .sidebar-link:hover {
+        @apply bg-gray-50;
+    }
+
+    .sidebar-link.active {
+        @apply text-blue-600 bg-blue-50 border-r-4 border-blue-600;
+    }
+
+    /* ===== USER ===== */
+    .sidebar-user {
+        @apply border-t border-gray-200 p-4 flex items-center;
+    }
+
+    .user-avatar {
+        @apply w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center
+               text-white font-semibold;
+    }
+
+    .user-info {
+        @apply ml-3;
+    }
+
+    .user-name {
+        @apply text-sm font-semibold text-gray-900;
+    }
+
+    .user-email {
+        @apply text-xs text-gray-500;
+    }
+
+    /* ===== MAIN ===== */
+    .main-area {
+        @apply flex-1 flex flex-col overflow-hidden;
+    }
+
+    .main-header {
+        @apply h-16 bg-white border-b border-gray-200
+               flex items-center justify-between px-6;
+    }
+
+    .page-title {
+        @apply text-xl font-bold text-gray-900;
+    }
+
+    .notify-btn {
+        @apply relative text-gray-400 hover:text-gray-600;
+    }
+
+    .notify-dot {
+        @apply absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full;
+    }
+
+    .page-content {
+        @apply flex-1 overflow-y-auto p-6;
+    }
+}
+
+@layer components {
+
+    /* ===== TEACHER LAYOUT ===== */
+    .teacher-body {
+        @apply bg-gray-50;
+    }
+
+    .teacher-wrapper {
+        @apply flex h-screen overflow-hidden;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .teacher-sidebar {
+        @apply w-64 bg-gradient-to-b from-purple-900 to-purple-800
+               text-white flex-shrink-0 overflow-y-auto;
+    }
+
+    .teacher-sidebar-inner {
+        @apply h-full flex flex-col;
+    }
+
+    .teacher-logo {
+        @apply h-16 flex items-center px-6 border-b border-purple-700 space-x-3;
+    }
+
+    .teacher-logo-icon {
+        @apply w-10 h-10 bg-white rounded-xl
+               flex items-center justify-center;
+    }
+
+    .icon-white {
+        @apply w-6 h-6 text-purple-900;
+    }
+
+    .teacher-logo-title {
+        @apply font-bold text-lg;
+    }
+
+    .teacher-logo-sub {
+        @apply text-xs text-purple-200;
+    }
+
+    /* ===== MENU ===== */
+    .teacher-menu {
+        @apply flex-1 py-6 px-3;
+    }
+
+    .teacher-link {
+        @apply block px-4 py-3 mb-1 rounded-lg
+               text-purple-100 hover:bg-purple-800
+               transition font-medium;
+    }
+
+    .teacher-link.active {
+        @apply bg-purple-700 text-white;
+    }
+
+    .teacher-divider {
+        @apply my-4 border-t border-purple-700;
+    }
+
+    /* ===== USER ===== */
+    .teacher-user {
+        @apply border-t border-purple-700 p-4 flex items-center;
+    }
+
+    .teacher-avatar {
+        @apply w-10 h-10 bg-purple-600 rounded-full
+               flex items-center justify-center
+               text-white font-semibold;
+    }
+
+    .teacher-user-info {
+        @apply ml-3;
+    }
+
+    .teacher-user-name {
+        @apply text-sm font-semibold;
+    }
+
+    .teacher-user-email {
+        @apply text-xs text-purple-200;
+    }
+
+    /* ===== MAIN ===== */
+    .teacher-main {
+        @apply flex-1 flex flex-col overflow-hidden;
+    }
+
+    .teacher-header {
+        @apply h-16 bg-white border-b border-gray-200
+               flex items-center justify-between px-6;
+    }
+
+    .teacher-page-title {
+        @apply text-xl font-bold text-gray-900;
+    }
+
+    .teacher-header-actions {
+        @apply flex items-center gap-4;
+    }
+
+    .teacher-btn-primary {
+        @apply flex items-center px-4 py-2
+               bg-purple-600 hover:bg-purple-700
+               text-white text-sm font-semibold
+               rounded-lg transition;
+    }
+
+    .teacher-content {
+        @apply flex-1 overflow-y-auto p-6 bg-gray-50;
+    }
+}
+
+@layer components {
+
+    /* ===== LAYOUT ===== */
+    .exam-grid {
+        @apply grid grid-cols-1 lg:grid-cols-3 gap-6;
+    }
+
+    .exam-main {
+        @apply lg:col-span-2 space-y-6;
+    }
+
+    .exam-sidebar {
+        @apply lg:col-span-1;
+    }
+
+    /* ===== CARD ===== */
+    .card {
+        @apply bg-white rounded-xl border border-gray-200 p-6 shadow-sm;
+    }
+
+    .card-title {
+        @apply flex items-center gap-2 text-lg font-bold text-gray-900 mb-6;
+    }
+
+    .card-header {
+        @apply flex items-center justify-between mb-6;
+    }
+
+    /* ===== FORM ===== */
+    .form-group {
+        @apply mb-4;
+    }
+
+    .form-label {
+        @apply block text-sm font-semibold text-gray-700 mb-2;
+    }
+
+    .required {
+        @apply text-red-500;
+    }
+
+    .form-input {
+        @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl
+               focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition;
+    }
+
+    .form-textarea {
+        @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl
+               focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition;
+    }
+
+    .form-select {
+        @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl
+               focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition;
+    }
+
+    .form-grid-2 {
+        @apply grid grid-cols-2 gap-4;
+    }
+
+    /* ===== BUTTON ===== */
+    .btn-primary {
+        @apply px-4 py-2 bg-blue-600 hover:bg-blue-700
+               text-white font-semibold rounded-lg transition;
+    }
+
+    .btn-secondary {
+        @apply px-4 py-2 bg-gray-100 hover:bg-gray-200
+               text-gray-700 font-semibold rounded-lg transition;
+    }
+
+    /* ===== QUESTION ===== */
+    .question-list {
+        @apply space-y-6;
+    }
+
+    .question-item {
+        @apply border-2 border-gray-200 rounded-xl p-6;
+    }
+
+    .question-title {
+        @apply text-lg font-bold text-gray-900 mb-4;
+    }
+
+    /* ===== ICON ===== */
+    .icon-primary {
+        @apply w-5 h-5 text-blue-600;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-title {
+        @apply text-lg font-bold text-gray-900 mb-4;
+    }
+
+    .sidebar-sticky {
+        @apply sticky top-6 space-y-4;
+    }
+}
+/* =====================
+    index teacher
+    ====================*/
+@layer components {
+    /* ===== Header ===== */
+    .exams-header {
+        @apply flex items-center justify-between mb-6;
+    }
+
+    .exams-filter {
+        @apply flex items-center space-x-4;
+    }
+
+    .exams-input {
+        @apply px-4 py-2 w-80 border border-gray-300 rounded-lg
+               focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    }
+
+    .exams-select {
+        @apply px-4 py-2 border border-gray-300 rounded-lg
+               focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    }
+
+    .btn-create {
+        @apply px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white
+               font-semibold rounded-xl shadow-lg transition
+               flex items-center;
+    }
+
+    /* ===== Stats cards ===== */
+    .stats-grid {
+        @apply grid grid-cols-1 md:grid-cols-4 gap-6 mb-6;
+    }
+
+    .stats-card {
+        @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+    }
+
+    .stats-icon {
+        @apply w-12 h-12 rounded-xl flex items-center justify-center;
+    }
+
+    /* ===== Table ===== */
+    .table-wrapper {
+        @apply bg-white rounded-xl shadow-sm border border-gray-200;
+    }
+
+    .table-header {
+        @apply p-6 border-b border-gray-200;
+    }
+
+    .table-title {
+        @apply text-lg font-bold text-gray-900;
+    }
+
+    .table-head {
+        @apply bg-gray-50 border-b border-gray-200;
+    }
+
+    .table-th {
+        @apply px-6 py-3 text-left text-xs font-semibold
+               text-gray-600 uppercase tracking-wider;
+    }
+
+    .table-row {
+        @apply hover:bg-gray-50 transition;
+    }
+
+    .table-cell {
+        @apply px-6 py-4;
+    }
+
+    .badge {
+        @apply px-3 py-1 text-xs font-semibold rounded-full;
+    }
+
+    /* ===== Actions ===== */
+    .action-group {
+        @apply flex items-center justify-end space-x-2;
+    }
+
+    .action-btn {
+        @apply p-2 rounded-lg transition;
+    }
+
+    /* ===== Pagination ===== */
+    .pagination {
+        @apply px-6 py-4 border-t border-gray-200
+               flex items-center justify-between;
+    }
+
+    .page-btn {
+        @apply px-3 py-2 border border-gray-300 rounded-lg
+               text-gray-600 hover:bg-gray-50 transition;
+    }
+}
+
+/* ======================
+   CARD & HOVER
+====================== */
+@layer components {
+.stats-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
+}
+
+.card-hover {
+    @apply transition hover:shadow-md hover:-translate-y-0.5;
+}
+
+/* ======================
+   ICON
+====================== */
+.stats-icon {
+    @apply w-14 h-14 rounded-xl flex items-center justify-center;
+}
+
+/* ======================
+   BADGE
+====================== */
+.badge {
+    @apply inline-block px-3 py-1 text-xs font-semibold rounded-full;
+}
+
+.badge-success {
+    @apply bg-green-100 text-green-700;
+}
+
+.badge-warning {
+    @apply bg-yellow-100 text-yellow-700;
+}
+
+/* ======================
+   BUTTON
+====================== */
+.btn-action {
+    @apply px-3 py-1 text-sm rounded-lg transition;
+}
+
+.btn-blue {
+    @apply text-blue-600 hover:bg-blue-50;
+}
+
+.btn-purple {
+    @apply text-purple-600 hover:bg-purple-50;
+}
+
+/* ======================
+   EXAM ITEM
+====================== */
+.exam-item {
+    @apply border-2 border-gray-200 rounded-xl p-4 transition cursor-pointer;
+}
+
+.exam-item:hover {
+    @apply border-purple-300 bg-purple-50;
+}
+
+/* ======================
+   SIDEBAR CARD
+====================== */
+.sidebar-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
+}
+
+/* ======================
+   CLASS ITEM
+====================== */
+.class-item {
+    @apply flex items-center justify-between p-3 rounded-lg;
+}
+
+/* ======================
+   ACTIVITY DOT
+====================== */
+.activity-dot {
+    @apply w-2 h-2 rounded-full mt-2 flex-shrink-0;
+}
+/* =======================
+   CHART BAR
+======================= */
+.chart-bar {
+    @apply w-full bg-purple-600 rounded-t-lg hover:bg-purple-700 transition cursor-pointer;
+}
+
+.chart-bar-active {
+    @apply bg-purple-700 hover:bg-purple-800;
+}
+}
+/* =====================
+   CSS thuần khác
+   ===================== */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+@media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+}
+
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.mobile-open { transform: translateX(0); }
+}
+
+
+
